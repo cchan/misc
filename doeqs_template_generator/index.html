@@ -1,0 +1,104 @@
+<h1>DOE Question Template Generator</h1>
+<small><i>requires JavaScript and JQuery and cookies to be enabled, which should be the default</i></small>
+<table border=1>
+<tr><th colspan=5>Example - 4 phys 5 chem</th>
+<tr><td>Name:<td><input value="Henry Hsu" disabled/><td>Subjects:<td><input value="4p5c" disabled/><td>x
+</table>
+<br>
+<table border=1 id='nsform'><tr><th colspan=5>Template Generator</th></table>
+<button id="add">Add Another</button> <button id="gen">Get Template</button>
+<br><br><br>
+You can copy and paste the document from below; it should automatically select it once generated unless you're using IE, which is a stupid idea.<br>
+<br>
+Copy the link: <a id="doclink" href=""></a><br>
+<br>
+<button onclick="selTemplate();">Select Template</button><br>
+<br>
+<div id="html" style="border:solid 1px #000000;width:80%;margin:0 auto;"><center>template to be here</center></div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="jquery-1.10.2.min.js">\x3C/script>')</script>
+<script src="jquery.jsoncookie.js"></script>
+<script>
+var subjtranslate={b:"BIOLOGY",c:"CHEMISTRY",p:"PHYSICS",m:"MATH",e:"EARTH AND SPACE SCIENCE"};
+function nsadd(n,s){$('#nsform').append('<tr><td>Name:<td><input class="name" value="'+n+'"/><td>Subjects:<td><input class="subj" value="'+s+'"/><td onclick="$(this).parents(\'tr\').remove();">x');}
+
+function selTemplate(){
+	window.getSelection().selectAllChildren(document.getElementById('html'));
+}
+
+var getarr={},cookiearr=$.cookie("qcook");
+
+//Interpret GET variables
+var a=location.search.substr(1).split('&');
+for(var i=0;i<a.length;i++){
+	var x=a[i].split('=');
+	if(!x[0]||!x[1])return false;
+	getarr[x[0]]=x[1];
+}
+
+if(getarr){
+	cookiearr=[];
+	for(var key in getarr)
+		if(getarr.hasOwnProperty(key))
+			cookiearr.push([key,getarr[key]]);
+}
+
+if(cookiearr)
+	if(cookiearr.length>0)for(var i=0;i<cookiearr.length;i++)nsadd(cookiearr[i][0],cookiearr[i][1]);
+	else{var cookiearr=[];nsadd('','');}
+else{var cookiearr=[];nsadd('','');}
+
+$("#add").click(function(){nsadd('','');});
+
+function generateLink(){
+	var names=$(".name");
+	getstr="?";
+	names.each(function(){getstr+=encodeURIComponent(this.value)+'='+encodeURIComponent($(".subj").get(names.index(this)).value)+'&';});
+	var linktext=location.origin+location.pathname+getstr.substr(0,getstr.length-1);
+	$("#doclink").text(linktext).attr('href',linktext);
+}
+generateLink();
+
+$("#gen").click(function(){
+	var qarr=[];
+	var names=$(".name");
+	cookiearr=[];
+	$(".name").each(function(){
+		var sv=$(".subj").get(names.index(this)).value;
+		cookiearr.push([this.value,sv]);
+		
+		for(var i=0;i<sv.length;i+=2){
+			if(!parseInt(sv[i])){alert("Invalid subject number for '"+this.value+"'");return false;}
+			if(!(s=subjtranslate[sv[i+1].toLowerCase()])){alert("Invalid subject for '"+this.value+"'");return false;}
+			for(var j=0;j<parseInt(sv[i]);j++)
+				qarr.push([s,this.value]);
+		}
+	});
+	$.cookie("qcook",cookiearr);
+	qarr=mooShuffle(qarr);
+	
+	var fullhtml="<b style='float:left'>[[team]]</b><b style='float:right'>[[date]]</b><center><b>DOE Questions</b></center><br>";
+	for(var i=0;i<qarr.length;i++){
+		fullhtml+="<center><b>TOSS-UP</b></center>"
+			+"<div>"+qarr[i][0]+" <i>QuestionType</i> "+qarr[i][1]+"</div>"
+			+"<div>ANSWER: </div>"
+			+"<center><b>BONUS</b></center>"
+			+"<div>"+qarr[i][0]+" <i>QuestionType</i> "+qarr[i][1]+"</div>"
+			+"<div>ANSWER: </div>"
+			+"<br>";
+	}
+	$("#html").html(fullhtml);
+	
+	selTemplate();
+	generateLink();
+});
+function mooShuffle(arr){//Fisher-Yates Shuffle, but which I discovered myself independently. So I get to name it ^^
+	var ind,tmp;
+	for(var i=arr.length-1;i>0;i--){
+		ind=Math.floor(Math.random()*i);//Get random one
+		tmp=arr[i];arr[i]=arr[ind];arr[ind]=tmp;//Swap with last one in sorted area
+	}
+	return arr;
+}
+
+</script>

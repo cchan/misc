@@ -1,0 +1,1 @@
+[["present","imperfect","future","perfect","past perfect","future perfect"],["first","second","third"],["singular","plural"]]
