@@ -19,7 +19,7 @@
 var SUBJTRANSLATE={b:"BIOLOGY",c:"CHEMISTRY",p:"PHYSICS",m:"MATH",e:"EARTH AND SPACE SCIENCE"};
 /******ENDCNF******/
 
-function nsadd(n,s){$('#nsform').append('<tr><td>Name:<td><input class="name" value="'+n+'"/><td>Subjects:<td><input class="subj" value="'+s+'"/><td onclick="$(this).parents(\'tr\').remove();">x');}
+function nsadd(n,s){$('#nsform').append('<tr><td>Name:<td><input class="name" value="'+htmlentities(n)+'"/><td>Subjects:<td><input class="subj" value="'+htmlentities(s)+'"/><td onclick="$(this).parents(\'tr\').remove();">x');}
 function selTemplate(){
 	if(window.getSelection())window.getSelection().selectAllChildren(document.getElementById('html'));
 	else alert("Your browser doesn't support selection properly D: You can probably just manually select the entire document and that'll do just fine.");
@@ -41,8 +41,8 @@ function genTemplate(){
 	$(".name").each(function(){
 		var sv=$(".subj").get($(".name").index(this)).value;
 		for(var i=0;i<sv.length;i+=2){
-			if(!parseInt(sv[i])){alert("Invalid subject number for '"+this.value+"'");return false;}
-			if(!(s=SUBJTRANSLATE[sv[i+1].toLowerCase()])){alert("Invalid subject for '"+this.value+"'");return false;}
+			if(!parseInt(sv[i])){alert("Invalid subject number for '"+htmlentities(this.value)+"'");return false;}
+			if(!(s=SUBJTRANSLATE[sv[i+1].toLowerCase()])){alert("Invalid subject for '"+htmlentities(this.value)+"'");return false;}
 			for(var j=0;j<parseInt(sv[i]);j++)
 				qarr.push([s,this.value]);
 		}
@@ -53,7 +53,7 @@ function genTemplate(){
 	var x=["TOSS-UP","BONUS"];
 	for(var i=0;i<qarr.length;i++)for(var j=0;j<x.length;j++)
 		fullhtml+="<p style='text-align:center;font-weight:bold;'>"+x[j]+"</p>"
-			+"<div style='font-weight:normal;'>"+i+") "+qarr[i][0]+" <i>Question Type</i> "+qarr[i][1]+"</div>"
+			+"<div style='font-weight:normal;'>"+i+") "+htmlentities(qarr[i][0])+" <i>Question Type</i> "+htmlentities(qarr[i][1])+"</div>"
 			+"<div style='font-weight:normal;'>ANSWER:&nbsp;</div>";
 	$("#html").html(fullhtml+"<br>");
 }
@@ -65,11 +65,14 @@ function mooShuffle(arr){//Fisher-Yates Shuffle, but which I discovered myself i
 	}
 	return arr;
 }
+function htmlentities(str) {//http://css-tricks.com/snippets/javascript/htmlentities-for-javascript/
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
 //Fetch data from memory
 //if GET parameters, override everything; else if cookie fill it in, otherwise just single blank.
 var getarr={},nsarr=[],a=location.search.substr(1).split('&');
-for(var i=0;i<a.length;i++){var x=a[i].split('=');if(!x[0]||!x[1])continue;getarr[x[0]]=x[1];}
+for(var i=0;i<a.length;i++){var x=a[i].split('=');if(!x[0]||!x[1])continue;getarr[decodeURIComponent(x[0])]=decodeURIComponent(x[1]);}
 if(getarr){for(var key in getarr)if(getarr.hasOwnProperty(key))nsarr.push([key,getarr[key]]);}
 else if((nsarr=$.cookie("qcook")).length==0)nsarr=[['','']];
 for(var i=0;i<nsarr.length;i++)nsadd(nsarr[i][0],nsarr[i][1]);
