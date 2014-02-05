@@ -3,6 +3,7 @@
 	<p>Based on the subjects-per-person given, generates a DOE questions template with question assignments.</p>
 	<small><i>requires JavaScript and JQuery and cookies to be enabled, which should be the default</i></small><br><br>
 	<table border=1><tr><th colspan=5>Example - 4 phys 5 chem</th><tr><td>Name:<td><input value="Henry Hsu" disabled/><td>Subjects:<td><input value="4p5c" disabled/><td>x</table><br>
+	<div id="subjdisplay"></div>
 	<table border=1 id='nsform'><tr><th colspan=5>Template Generator</th></table>
 	<button onclick="nsadd('','');">Add Another</button>
 	<button onclick="genTemplate();generateLink();saveQCookie();selTemplate();">Generate Template</button>
@@ -16,8 +17,9 @@
 <script src="jquery.jsoncookie.js"></script>
 <script>
 /******CONFIG******/
-var SUBJTRANSLATE={b:"BIOLOGY",c:"CHEMISTRY",p:"PHYSICS",m:"MATH",e:"EARTH AND SPACE SCIENCE"};
+var SUBJTRANSLATE={b:"BIOLOGY",c:"CHEMISTRY",p:"PHYSICS",m:"MATH",e:"EARTH AND SPACE SCIENCE",n:"ENERGY"};
 /******ENDCNF******/
+for(var i in SUBJTRANSLATE)$('#subjdisplay').append(i+'='+SUBJTRANSLATE[i]+'; ');
 
 function nsadd(n,s){$('#nsform').append('<tr><td>Name:<td><input class="name" value="'+htmlentities(n)+'"/><td>Subjects:<td><input class="subj" value="'+htmlentities(s)+'"/><td onclick="$(this).parents(\'tr\').remove();">x');}
 function selTemplate(){
