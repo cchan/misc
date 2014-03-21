@@ -1,0 +1,74 @@
+body{
+font-family:Ubuntu,Segoe UI,Frutiger,Open Sans,Arial,sans-serif;
+}
+
+#title{
+text-align:center;
+font-size:22pt;
+font-weight:bold;
+opacity:0.7;
+margin-bottom:20px;
+}
+.quote{
+text-align:center;
+font-family:Times New Roman,serif;
+font-style:italic;
+font-size:10pt;
+line-height:1em;
+opacity:0.8;
+}
+.quote span{
+font-size:3em;position:relative;top:10px;
+opacity:0.4;
+}
+#wrap{
+font-weight:bold;
+text-align:center;
+margin-left:auto;
+margin-right:auto;
+}
+#wrap td{
+width:50%;
+vertical-align:top;
+}
+#display{
+font-size:72pt;
+color:#7f5217;
+}
+#money{
+font-size:72pt;
+color:#fdd017;
+}
+.subtitle td{
+text-align:center;
+font-size:12pt;
+font-weight:normal;
+font-family:Impact,Verdana,sans-serif;
+width:100%;
+}
+#prizes,#leaders{
+font-size:12pt;
+}
+
+#form{
+text-align:center;
+display:block;
+width:100%;
+}
+#form table{
+display:inline;
+}
+#form *{
+text-align:center;
+}
+#form input{
+width:200px;
+}
+.subbtn{
+background-color:white;
+border:solid 1px #999;
+}
+.hist td{
+border:solid 1px #ccc;
+color:#666;
+}

@@ -1,0 +1,40 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="circles.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="jquery.min.js">\x3C/script>')</script>
+</head>
+<body>
+<div id="circContainer">
+	<div id="stl" class="sect" bright='#FF0000' dark='#660000'><h1>Projects</h1></div>
+	<div id="str" class="sect" bright='#FFFF00' dark='#666600'><h1>Stuff</h1></div>
+	<div id="sbl" class="sect" bright='#00FFFF' dark='#006666'><h1>Asdf</h1></div>
+	<div id="sbr" class="sect" bright='#00FF00' dark='#006600'><h1>Oinkers</h1></div>
+	<div id="littleCirc">
+		<br>
+		<div class="title">Clive Chan</div>
+		<div class="subtitle">Programmer</div>
+		<br>
+		<div id="infobox">
+		<b>Welcome!</b><br>I am a <b>freelance programmer</b> living in the Boston, Massachusetts area.<br><br>Though I specialize in web design, I have <b>experience in many areas</b>.
+		</div>
+	</div>
+</div>
+<script>
+$('.sect').each(function(){
+	this.style.backgroundColor=this.getAttribute('dark');
+}).mouseover(function(){
+	document.body.style.backgroundColor=this.style.backgroundColor=this.getAttribute('bright');
+	this.style.width=this.style.height='300px';
+}).close=function(){
+	document.body.style.backgroundColor='white';
+	this.style.backgroundColor=this.getAttribute('dark');
+	this.style.width=this.style.height='200px';
+};
+$('#littleCirc').mouseover(function(){
+	$('.sect').animate('opacity','0.5');
+}).mouseout(function(){
+	$('.sect').animate('opacity','1');
+});
+</script>
+</body></html>
