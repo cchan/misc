@@ -1,0 +1,22 @@
+<style>
+.Unit{
+	position:absolute;
+	top:0;left:0;
+	display:block;
+}
+</style>
+<body>
+
+</body>
+<script src='MoveableObject.js'></script>
+<script src='Unit.js'></script>
+<script>
+window.onload=function(){
+	window.u=new User("green");
+	var x=new Unit(u,200,100,30,20,10);
+}
+window.onclick=function(e){
+	if(!e)var e=window.event;
+	u.move(e.mouseX,e.mouseY);
+}
+</script>
