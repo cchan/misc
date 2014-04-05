@@ -1,1 +1,6 @@
 animation explaining encryption/hashing right in front of you.
+
+xprize (sim)
+
+that virtual-stock-exchange thing
+
