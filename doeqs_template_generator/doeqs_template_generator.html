@@ -3,7 +3,8 @@
 	<p>Based on the subjects-per-person given, generates a DOE questions template with question assignments.</p>
 	<small><i>requires JavaScript and JQuery and cookies to be enabled, which should be the default</i></small><br><br>
 	<table border=1><tr><th colspan=5>Example - 4 phys 5 chem</th><tr><td>Name:<td><input value="Henry Hsu" disabled/><td>Subjects:<td><input value="4p5c" disabled/><td>x</table><br>
-	<div id="subjdisplay"></div>
+	<div id="subjdisplay">&nbsp;</div>
+	<div id="subjnums" style='font-size:0.7em;'>&nbsp;</div>
 	<table border=1 id='nsform'><tr><th colspan=5>Template Generator</th></table>
 	<button onclick="nsadd('','');">Add Another</button>
 	<button onclick="genTemplate();generateLink();saveQCookie();selTemplate();">Generate Template</button>
@@ -13,8 +14,8 @@
 </div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="jquery-1.10.2.min.js">\x3C/script>')</script>
-<script src="jquery.jsoncookie.js"></script>
+<script>window.jQuery || document.write('<script src="js/jquery.min.js">\x3C/script>')</script>
+<script src="js/jquery.jsoncookie.js"></script>
 <script>
 /******CONFIG******/
 var SUBJTRANSLATE={b:"BIOLOGY",c:"CHEMISTRY",p:"PHYSICS",m:"MATH",e:"EARTH AND SPACE SCIENCE",n:"ENERGY"};
@@ -40,22 +41,35 @@ function saveQCookie(){
 }
 function genTemplate(){
 	var qarr=[];
+	var sarr=[];
 	$(".name").each(function(){
 		var sv=$(".subj").get($(".name").index(this)).value;
 		for(var i=0;i<sv.length;i+=2){
 			if(!parseInt(sv[i])){alert("Invalid subject number for '"+htmlentities(this.value)+"'");return false;}
 			if(!(s=SUBJTRANSLATE[sv[i+1].toLowerCase()])){alert("Invalid subject for '"+htmlentities(this.value)+"'");return false;}
-			for(var j=0;j<parseInt(sv[i]);j++)
+			for(var j=0;j<parseInt(sv[i]);j++){
 				qarr.push([s,this.value]);
+				if(!sarr[s])sarr[s]=0;
+				sarr[s]++;
+				console.log(s+' '+sarr[s]);
+			}
 		}
 	});
 	qarr=mooShuffle(qarr);
+	
+	$('#subjnums').text('This has ');
+	var stotal=0;
+	for(var i in sarr){
+		$('#subjnums').append(sarr[i]+' '+i+', ');
+		stotal+=sarr[i];
+	}
+	$('#subjnums').append('Total: '+stotal);
 	
 	var fullhtml="<p style='text-align:center;font-weight:bold;'>[[team]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DOE Questions&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[date]]</p>";
 	var x=["TOSS-UP","BONUS"];
 	for(var i=0;i<qarr.length;i++)for(var j=0;j<x.length;j++)
 		fullhtml+="<p style='text-align:center;font-weight:bold;'>"+x[j]+"</p>"
-			+"<div style='font-weight:normal;'>"+i+") "+htmlentities(qarr[i][0])+" <i>Question Type</i> "+htmlentities(qarr[i][1])+"</div>"
+			+"<div style='font-weight:normal;'>"+(i+1)+") "+htmlentities(qarr[i][0])+" <i>Question Type</i> "+htmlentities(qarr[i][1])+"</div>"
 			+"<div style='font-weight:normal;'>ANSWER:&nbsp;</div>";
 	$("#html").html(fullhtml+"<br>");
 }
