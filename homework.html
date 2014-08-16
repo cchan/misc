@@ -1,0 +1,27 @@
+<style>
+iframe{display:none;width:100%;height:95%;}
+#nav{width:100%;height:20px;padding-left:20px;background-color:white;border-bottom:solid 1px #000000;}
+</style>
+<script>
+function chg(name){
+	var iframes=document.getElementsByTagName('iframe');
+	for(var i=0;i<iframes.length;i++)
+		iframes[i].style.display='none';
+	document.getElementById(name).style.display='block';
+}
+</script>
+<div id='nav'>
+	Useful-to-check-daily tabs:
+	<a href='#' onclick='chg("aspen");'>Aspen</a>
+	<a href='#' onclick='chg("english");'>English</a>
+	<a href='#' onclick='chg("bio");'>Bio</a>
+	<a href='#' onclick='chg("history");'>History</a>
+	<a href='#' onclick='chg("mandarin");'>Mandarin</a>
+</div>
+<br>
+<iframe id="aspen" src='https://ma-lexington.myfollett.com/aspen/logon.do'></iframe>
+<iframe id="english" src='http://omenglish.wordpress.com/literature-and-composition-2/homework/'></iframe>
+<iframe id="bio" src='http://sites.google.com/site/hobbsapbio/home/homework-assignments'></iframe>
+<iframe id="history" src='http://teacherweb.com/MA/LexingtonPublicSchools/highschoolbehs/apt10.aspx'></iframe>
+<iframe id="mandarin" src='http://teacherweb.com/MA/LexingtonHighSchool/JieyingYaoMandarin/apt7.aspx'></iframe>
+<!-- <iframe src='http://'></iframe> -->
