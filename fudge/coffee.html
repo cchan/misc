@@ -1,103 +1,229 @@
-<link rel='stylesheet' href='style.css' />
+<style>
+body{
+font-family:Ubuntu,Segoe UI,Frutiger,Open Sans,Arial,sans-serif;
+}
+
+#title{
+text-align:center;
+font-size:22pt;
+font-weight:bold;
+opacity:0.7;
+margin-bottom:20px;
+}
+.quote{
+text-align:center;
+font-family:Times New Roman,serif;
+font-style:italic;
+font-size:10pt;
+line-height:1em;
+opacity:0.8;
+}
+.quote span{
+font-size:3em;position:relative;top:10px;
+opacity:0.4;
+}
+#wrap{
+font-weight:bold;
+text-align:center;
+margin-left:auto;
+margin-right:auto;
+}
+#wrap td{
+width:50%;
+vertical-align:top;
+}
+#total{
+font-size:72pt;
+color:#7f5217;
+}
+#money{
+font-size:50pt;
+margin-top:15pt;
+color:#fdd017;
+}
+.subtitle td{
+text-align:center;
+font-size:12pt;
+font-weight:normal;
+font-family:Impact,Verdana,sans-serif;
+width:100%;
+}
+#prizes,#leaders{
+font-size:12pt;
+}
+
+#form{
+text-align:center;
+display:block;
+width:100%;
+}
+#form table{
+display:inline;
+}
+#form *{
+text-align:center;
+}
+#form input{
+width:200px;
+}
+.subbtn{
+background-color:white;
+border:solid 1px #999;
+}
+.hist td{
+border:solid 1px #ccc;
+color:#666;
+}
+</style>
 <noscript><span style='font-weight:bold;color:red;'>u have javascript off, stahp just turn on javascript already</span></noscript>
 <img src='http://www.lexrobotics.com/wordpress/wp-content/uploads/2013/03/2012_Logo.png' style='position:fixed;right:20px;top:0px;width:200px;' />
 <div id='title' style='display:none'>coffeecounter<?php if($HAZ_FORM)echo ' [members only page]';?></div>
 <div class='subtitle' style='color:#666;text-align:center;'>
 	a <a href='http://www.lexrobotics.com' style='color:#999;' target='_blank'>Two Bits and a Byte</a> fundraiser<br>
-	Everyone needs coffee. Find any Two Bits and a Byte member and buy some today! <!--sales close... when?--><br>
-	Contact us at <a href="mailto:team@lexrobotics.com">team@lexrobotics.com</a>
+	Contact us at <a href="mailto:team@lexrobotics.com">team@lexrobotics.com</a> or ask any team member to sell you some coffee.
 </div>
-<!--div class='quote'><span>&#8220;</span><span>&#8221;</span></div-->
 <table id='wrap' style='margin-top:20px;'>
 	<tr class='subtitle'>
 		<td>pounds of coffee sold</td>
 		<td>money raised for the team</td>
 	</tr>
 	<tr>
-		<td><div id='display'>".intval($count)."</div></td>
-		<td><div id='money'>$".intval($count*$profit_margin)."</div></td>
+		<td><div id='total'></div></td>
+		<td><div id='money'></div></td>
 	</tr>
 	<tr class='subtitle'>
-		<td>fabulous team prizes/captain abuse</td>
-		<td>leaderboard</td>
+		<!--td>fabulous team prizes/captain abuse</td-->
+		<td colspan=2>leaderboard</td>
 	</tr>
 	<tr>
-		<td>
+		<!--td>
 			<div id='prizes'>
-				<ul style='list-style:none;margin-left:-25px;'>";
-				foreach($prizes as $req=>$prize)
-					$str.= "<li style='color:".(($req<=$count)?'#0f0':'#ccc')."'><b>$req</b>: <small>$prize</small></li>";
-				$str.="
+				<ul style='list-style:none;margin-left:-25px;'>
 				</ul>
 			</div>
-		</td>
-		<td>
+		</td-->
+		<td colspan=2>
 			<div id='leaders'>
-				<ul style='list-style:none;margin-left:-25px;'>";
-				$leaders=$con->query('SELECT seller,SUM(amount) AS total FROM transactions GROUP BY seller ORDER BY SUM(amount) DESC');
-				while($l=$leaders->fetch_assoc()){
-					$r=intval($l['total']);
-					$str.="<li style='color:".
-										(($r>=30)?'gold':
-										(($r>=20)?'silver':
-										(($r>=10)?'#A67D3D':
-										(($r>=5)?'black':'gray'
-										))))
-						."'><b>{$l['seller']}</b>: <small>{$l['total']}</small></li>";
-				}
-				$str.="
+				<ul style='list-style:none;margin-left:-25px;'>
 				</ul>
 			</div>
 		</td>
 	</tr>
 </table>
 <div id='form'>
-<form method='POST' id='fudgeform'>
-	<table id="fudgetable">
-		<tr><td colspan='3'><div style='border-top:solid 1px #ccc;width:100%;margin:10px;margin-left:auto;margin-right:auto;font-size:0.7em;font-weight:bold;opacity:0.5'></div></tr>
-		<tr><td>Seller<td>Buyer<td>Pounds of Fudge</tr>
-		
-		<?php if($HAZ_FORM){?>
-		<tr>
-			<td><input type='text' name='seller' placeholder='Lyla Foxham' />
-			<td><input type='text' name='buyer' placeholder='Robotic Fudge Eater v0.4' />
-			<td><input type='text' name='lbs' placeholder='796.5' />
-		</tr>
-		<tr><td colspan=3><input type='submit' value='Add' class='subbtn' /></tr>
-		<?php }?>
-		<tr><td colspan=3><div style='border-top:solid 1px #ccc;width:50%;margin:10px;margin-left:auto;margin-right:auto;font-size:0.7em;font-weight:bold;opacity:0.5'>recent sales</div></tr>
-		
-		<tr class="hist"><td>seller<td>buyer<td>amount</tr>
-		
-		<tr id="lastrow"><td colspan='3'><input type='submit' id='histtogglebtn' value='+' style='width:20px;height:20px;padding:0px;border-radius:10px;text-align:center;vertical-align:middle;font-size:10pt;' /></tr>
+<form method='POST' id='coffeeform'>
+	<table id="coffeetable">
+		<thead>
+			<tr><td colspan='3'><div style='border-top:solid 1px #ccc;width:100%;margin:10px;margin-left:auto;margin-right:auto;font-size:0.7em;font-weight:bold;opacity:0.5'></div></tr>
+			<tr><td>Seller<td>Buyer<td>Pounds of Coffee</tr>
+		</thead>
+		<thead>
+			<tr>
+				<td><input type='text' name='seller' placeholder='Lyla Foxham' />
+				<td><input type='text' name='buyer' placeholder='Robotic CoffeeBrewer v0.9' />
+				<td><input type='text' name='lbs' placeholder='796.5' />
+			</tr>
+			<tr><td colspan=3><input type='submit' value='Add' class='subbtn' /></tr>
+		</thead>
+		<tbody>
+			<tr><td colspan=3><div style='border-top:solid 1px #ccc;width:50%;margin:10px;margin-left:auto;margin-right:auto;font-size:0.7em;font-weight:bold;opacity:0.5'>recent sales</div></tr>
+			<tr id="lastrow"><td colspan='3'><input type='submit' id='histtogglebtn' value='+' style='width:20px;height:20px;padding:0px;border-radius:10px;text-align:center;vertical-align:middle;font-size:10pt;' /></tr>
+		</tbody>
 	</table>
 </form>
 </div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-
 <script src='https://cdn.firebase.com/js/client/1.1.1/firebase.js'></script>
-<script>
+<script>/*
+var prizes = {//#prizes ul
+	300:"Ice cream party!"
+};//#0f0 if yes, #ccc if no
+////<b>Amount</b>: <small>prize</small>
+var colors = {//#leaders ul
+	20:'silver',
+	10:'#A67D3D',
+	3:'black',
+	0:'gray'
+};//<b>seller</b>: <small>amount</small>
+var colormax = 'gold';*/
+
+
 var ref = new Firebase('https://coffeecounter.firebaseio.com/');
 
-$('#fudgeform').on('submit',function(e){
-	var form = $("#fudgeform");
-	ref.push({seller:form.seller,buyer:form.buyer,lbs:form.lbs});
+//Hello there, code-viewer!
+//I acknowledge that this is deliciously hackable.
+//Avoid actually doing so.
+$('#coffeeform').on('submit',function(e){
+	var f = $("#coffeeform");
+	var s = f.find("[name=seller]").val();
+	var b = f.find("[name=buyer]").val();
+	var l = f.find("[name=lbs]").val();
+	s = s.replace(/[^a-zA-Z0-9 \_\-\@\.]/i,'').trim();
+	b = b.replace(/[^a-zA-Z0-9 \_\-\@\.]/i,'').trim();
+	l = parseFloat(l);
+	
+	if(s=='' || b=='' || isNaN(l))
+		alert("Invalid input.");
+	else
+		ref.push({'seller':s,'buyer':b,'lbs':l},function(err){
+			if(err != null)
+				alert("Invalid input #"+err.code+"#");
+		});
+	
+	this.reset();
+	
+	if(!e)e=window.event;
 	e.preventDefault();
 	return false;
 });
 
 ref.on('value',function(snapshot){
-	console.log(snapshot.val());
+try{
 	var value = snapshot.val();
+	$(".hist").remove();
+	var total = 0;
 	for(var key in value){
 		var row = $("<tr class='hist'><td class='s'><td class='b'><td class='l'></tr>");
 		row.find("td.s").text(value[key].seller);
 		row.find("td.b").text(value[key].buyer);
 		row.find("td.l").text(value[key].lbs);
 		$("#lastrow").before(row);
+		total += value[key].lbs;
 	}
+	$("#total").text(total);
+	$("#money").text('$' + (total * 7.5).toFixed(2));
 	styleHistory();
+	
+	//Merges duplicate sellers into single values
+	var keys = Object.keys(value);
+	for(var i = 0;i<keys.length;i++){
+		for(var j = i+1; j<keys.length;j++){
+			if(value[keys[i]].seller == value[keys[j]].seller){
+				value[keys[i]].lbs += value[keys[j]].lbs;
+				keys.splice(j,1);
+			}
+		}
+	}
+	//Sorts in decreasing order.
+	keys.sort(function(a,b){return value[a].lbs < value[b].lbs;});
+	
+	$("#leaders ul").html("");
+	
+	for(var i=0;i<keys.length;i++){
+		var li = $("<li><b></b>: <small><span></span> lbs</small></li>");
+		li.find("b").text(value[keys[i]].seller);
+		li.find("span").text(value[keys[i]].lbs);
+		var color;
+		if(i==0)color = 'gold';
+		else if(value[keys[i]].lbs < 3)color = 'gray';
+		else if(value[keys[i]].lbs < 10)color = 'black';
+		else if(value[keys[i]].lbs < 20)color = '#A67D3D';
+		else color = 'silver';
+		li.css("color",color);
+		$("#leaders ul").append(li);
+	}
+}catch(error){console.log(error);}
 });
 
 //color plugin
