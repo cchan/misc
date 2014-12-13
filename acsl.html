@@ -1,0 +1,25 @@
+<!--
+Clive Chan
+ACSL Contest 1
+Lexington High School
+Senior 5
+-->Enter input as a linebreak-separated list of comma-separated lists<br>
+into the textbox (in the format of the sample data), or into the five<br>
+lines of input boxes (as per the input spec).<br>
+<textarea rows=9 cols=50 id="z">A, C, 1, PM, 2, PM, 50, 60
+A, D, 9, AM, 1, PM, 50, 60
+B, E, 5, PM, 3, PM, 50, 60
+C, F, 11, PM, 2, AM, 50, 60
+E, K, 10, AM, 12, PM, 65, 55</textarea><br>
+<button onclick=p()>Calculate</button><br><br>
+<input id=a value=a><input id=b value=c><br><input id=c value=1><input id=d value=pm><br>
+<input id=e value=2><input id=f value=pm><br><input id=g value=50><br><input id=h value=60><br>
+<button onclick=d('x').innerHTML=t(f())>Calculate</button><p id=x>[result here]</p><script>
+function d(i){return document.getElementById(i)}function v(i){return d(i).value.toLowerCase()}
+function i(l){return y(v(l),10)}function p(){l=v('z').split('\n'),s='';for(x of l){n=x.split(',')
+for(z in n)d(String.fromCharCode(97+y(z))).value=n[z].trim();s+=t(f())+'<br>'}d('x').innerHTML=s}
+function t(i){return(i-i%1)+":"+(i%1*6<1?'0':'')+m.round(i%1*60)}
+function f(){h=12,x={a:0,b:450,c:590,d:715,e:1080,f:1330,g:1490,h:1870,j:2105,k:2425}
+c=m.abs(x[v('b')]-x[v('a')]),_=i('c')%h+((v('d')=='pm')?h:0),$=i('e')%h+((v('f')=='pm')?h:0)
+if(_-$>h)_-=24;if($-_>h)$-=24;if(_>$)return(c-i('h')*(_-$))/(i('h')+i('g'))+(_<$?_-$:0)
+else return(c-i('g')*($-_))/(i('h')+i('g'))+$-_}m=Math,y=parseInt</script>
