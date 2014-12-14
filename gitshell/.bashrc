@@ -2,6 +2,7 @@
 
 cd ~/Desktop/github
 
+alias gr="cd ~/Desktop/github; cd"
 alias gps="git push origin"
 alias gpl="git pull origin"
 alias gs="git status"
@@ -15,6 +16,7 @@ alias lhsmath="cd ~/Desktop/github/lhsmath && git status"
 alias hackne="cd ~/Desktop/github/hackne && git status"
 alias scifair="cd ~/Desktop/github/scifair/scifair2015 && git status"
 alias lib="cd ~/Desktop/github/lib && git status"
+alias npp="C:\Program Files (x86)\Notepad++\notepad++.exe"
 
 clear
 echo HELLO!
