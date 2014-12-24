@@ -1,4 +1,10 @@
-# Sets up a convenient git Bash environment. Copy into ~. (that is, C:/Users/You/)
+# .bashrc
+# LastUpdated 12/24/14
+# Copyright(c) Clive Chan, 2014
+# License: CC BY-SA 4.0(https://creativecommons.org/licenses/by-sa/4.0/)
+
+# Sets up a convenient git Bash environment. Copy into ~ (on Windows, C:/Users/You/), and run msysgit.
+
 # Stuff nearer the top is more customizable.
 
 # Gets to the right place
@@ -6,17 +12,16 @@ cd ~/Desktop/github
 
 # Welcome!
 clear
-echo HELLO!
-echo Try using commands \"gs\" or \"gc\" or \"gsa\". Try \"notepad ~/.bashrc\" to look at all your aliases.
+echo Sample commands: gs gc gu gsa npp. Try \"notepad ~/.bashrc\" to look at all your aliases.
 
-
-# Makes me sign in with SSH key if necessary
-# ("ssh-agent" returns a bash script that sets global variables)
+# Makes me sign in with SSH key if necessary; tries to preserve sessions if possible.
+# For a guide on how to use SSH with GitHub, try https://help.github.com/articles/generating-ssh-keys/
 # If something messes up, just remove the starter file and restart the shell with ssh-reset.
-# Otherwise it'll handle itself.
+# "ssh-agent" returns a bash script that sets global variables, so I store it into a tmp file auto-erased at each reboot.
 sshtmp="/tmp/sshagentthing.sh"
-ssh-start () { ssh-agent > $sshtmp; . $sshtmp; ssh-add; }
-ssh-reset () { echo "Resetting SSH agent" ;rm $sshtmp; kill $SSH_AGENT_PID; ssh-start; }
+ssh-start () { ssh-agent > $sshtmp; . $sshtmp; ssh-add; } # -t 1200 may be added to ssh-agent.
+ssh-end () { rm $sshtmp; kill $SSH_AGENT_PID; }
+ssh-reset () { echo "Resetting SSH agent"; ssh-end; ssh-start; }
 if [ ! -f $sshtmp ]; then # Only do it if daemon doesn't already exist
 	echo.
 	echo "New SSH agent"
@@ -25,7 +30,6 @@ else # Otherwise, everything is preserved until the ssh-agent process is stopped
 	echo "Reauthenticating"
 	. $sshtmp
 fi
-
 
 # Aliases for various repos
 alias tbb="cd ~/Desktop/github/2015-4029 && git status"
@@ -41,9 +45,9 @@ alias robotc="\"C:\Program Files (x86)\Robomatter Inc\ROBOTC Development Environ
 alias sublime="\"C:\Program Files\Sublime Text 3\sublime_text.exe\""
 
 # Git shortforms.
-alias gs="git status"
-alias gc="git add -A && git commit"
-gu () { gc "$@"; git push;} # commits things and pushes them, with all arguments to it passed to git commit.
+alias gs="git status" # Laziness.
+alias gc="git add -A && git commit" #Stages everything and commits it. You can add -m "asdf" if you want, and it'll apply to "git commit".
+gu () { gc "$@"; git push;} # commits things and pushes them. You can use gu -m "asdf", since all arguments to gu are passed to gc.
 
 # The amazing git-status-all script, which reports on the status of every repo in the current folder.
 gsa () {
