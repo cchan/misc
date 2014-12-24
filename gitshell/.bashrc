@@ -4,16 +4,28 @@
 # Gets to the right place
 cd ~/Desktop/github
 
-# Makes me sign in with SSH key.
-echo.
-echo Sign in:
-eval `ssh-agent`
-ssh-add
-
 # Welcome!
 clear
 echo HELLO!
 echo Try using commands \"gs\" or \"gc\" or \"gsa\". Try \"notepad ~/.bashrc\" to look at all your aliases.
+
+
+# Makes me sign in with SSH key if necessary
+# ("ssh-agent" returns a bash script that sets global variables)
+# If something messes up, just remove the starter file and restart the shell with ssh-reset.
+# Otherwise it'll handle itself.
+sshtmp="/tmp/sshagentthing.sh"
+ssh-start () { ssh-agent > $sshtmp; . $sshtmp; ssh-add; }
+ssh-reset () { echo "Resetting SSH agent" ;rm $sshtmp; kill $SSH_AGENT_PID; ssh-start; }
+if [ ! -f $sshtmp ]; then # Only do it if daemon doesn't already exist
+	echo.
+	echo "New SSH agent"
+	ssh-start
+else # Otherwise, everything is preserved until the ssh-agent process is stopped.
+	echo "Reauthenticating"
+	. $sshtmp
+fi
+
 
 # Aliases for various repos
 alias tbb="cd ~/Desktop/github/2015-4029 && git status"
