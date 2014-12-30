@@ -1,5 +1,5 @@
 # .bashrc
-# LastUpdated 12/24/14
+# LastUpdated 12/30/14
 # Copyright(c) Clive Chan, 2014
 # License: CC BY-SA 4.0(https://creativecommons.org/licenses/by-sa/4.0/)
 
@@ -29,6 +29,10 @@ if [ ! -f $sshtmp ]; then # Only do it if daemon doesn't already exist
 else # Otherwise, everything is preserved until the ssh-agent process is stopped.
 	echo "Reauthenticating"
 	. $sshtmp
+	if ! ps | grep $SSH_AGENT_PID > /dev/null; then
+		echo "No agent with PID $SSH_AGENT_PID is running."
+		ssh-reset
+	fi
 fi
 
 # Aliases for various repos
@@ -91,3 +95,5 @@ gsa () {
 	done
 	' \;
 }
+
+clear
