@@ -1,0 +1,4 @@
+git add $1
+git commit -m "img"
+git push clivemisc clivemisc:master --force
+echo "http://clivemisc.pancakeapps.com/$1" | clip
