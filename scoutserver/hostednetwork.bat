@@ -1,3 +1,5 @@
+@echo off
+
 netsh wlan set hostednetwork mode=allow ssid=scoutserver key=qwertyuiop
 netsh wlan start hostednetwork
 
