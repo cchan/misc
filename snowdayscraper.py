@@ -18,7 +18,7 @@ def getsnowday():
     soup = BeautifulSoup(html)
     text = soup.find('p').text
     
-    if text.find('in session') == -1:
+    if text.find('Monday, February 9, 2015') == -1:
         ctypes.windll.user32.MessageBoxA(0, text.strip().encode('utf-8'), b"SNOW DAY", 0x00001000)
     else:
         print(text)
