@@ -50,7 +50,7 @@ alias sublime="\"C:\Program Files\Sublime Text 3\sublime_text.exe\""
 
 # Git shortforms.
 alias gs="git status" # Laziness.
-alias gc="git add -A && git commit" #Stages everything and commits it. You can add -m "asdf" if you want, and it'll apply to "git commit".
+alias gc="git add --all :/ && git commit" #Stages everything and commits it. You can add -m "asdf" if you want, and it'll apply to "git commit".
 gu () { gc "$@"; git push;} # commits things and pushes them. You can use gu -m "asdf", since all arguments to gu are passed to gc.
 
 # The amazing git-status-all script, which reports on the status of every repo in the current folder.
