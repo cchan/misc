@@ -11,8 +11,12 @@
 cd ~/Desktop/github
 
 # Welcome!
-clear
+echo Welcome! This is the super-awesome .bashrc file installed in your \~ directory.
 echo Sample commands: gs gc gu gsa npp. Try \"notepad ~/.bashrc\" to look at all your aliases.
+
+# Self-update.
+echo Self update:
+cp ~/Desktop/github/misc/.bashrc ~/.bashrc
 
 # Makes me sign in with SSH key if necessary; tries to preserve sessions if possible.
 # For a guide on how to use SSH with GitHub, try https://help.github.com/articles/generating-ssh-keys/
