@@ -42,6 +42,7 @@ alias lhsmath="cd ~/Desktop/github/lhsmath && git status"
 alias hackne="cd ~/Desktop/github/hackne && git status"
 alias scifair="cd ~/Desktop/github/scifair && git status"
 alias lib="cd ~/Desktop/github/lib && git status"
+alias cb="cd ~/Desktop/github/rtwf/calcbee && git status"
 
 # Editor aliases
 alias npp="\"C:\Program Files (x86)\Notepad++\notepad++.exe\""

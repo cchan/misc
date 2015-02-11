@@ -23,6 +23,6 @@ def getsnowday():
     else:
         print(text)
     # https://stackoverflow.com/questions/2697039/python-equivalent-of-setinterval
-    Timer(30.0, getsnowday).start()
+    Timer(10.0, getsnowday).start()
 
 getsnowday()
