@@ -11,12 +11,13 @@
 cd ~/Desktop/github
 
 # Welcome!
+echo.
 echo Welcome! This is the super-awesome .bashrc file installed in your \~ directory.
 echo Sample commands: gs gc gu gsa npp. Try \"notepad ~/.bashrc\" to look at all your aliases.
 
 # Self-update.
-echo Self update:
-cp ~/Desktop/github/misc/.bashrc ~/.bashrc
+echo Self-updating from ~/Desktop/github/misc/.bashrc...
+cp -v ~/Desktop/github/misc/.bashrc ~/.bashrc
 
 # Makes me sign in with SSH key if necessary; tries to preserve sessions if possible.
 # For a guide on how to use SSH with GitHub, try https://help.github.com/articles/generating-ssh-keys/
@@ -65,6 +66,7 @@ gsa () {
 	echo "
 --------{}--------";
 	git remote update >/dev/null &>/dev/null
+	git -c color.status=always rev-parse --abbrev-ref HEAD
 	git -c color.status=always status -s
 
 	for branch in $(git for-each-ref --sort="-authordate:iso8601" --format="%(refname)" refs/heads/); do
@@ -101,4 +103,3 @@ gsa () {
 	' \;
 }
 
-clear
