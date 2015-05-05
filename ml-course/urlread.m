@@ -7,7 +7,7 @@
 	% If you use urlread with three parameters for any other legitimate purposes in your code, apologies, but this overrides that.
 
 % HOW
-	% Put this file into OCTAVE_HOME/lib
+	% Put this file into OCTAVE_HOME/share/octave/site/m
 	% Download https://certs.godaddy.com/repository/gd_bundle.crt and put it into OCTAVE_HOME/ssl/certs.
 		% (this is a bundle of certificates that help Curl verify the identity of the Coursera server)
 	% Proceed contrary to the warning on https://www.coursera.org/learn/machine-learning/supplement/p9ckf/installing-octave-matlab-on-windows
