@@ -1,12 +1,32 @@
+90 OMG
+133 Arrows
 2875 MightyBot
+3057 Girls Like Bots
+3085 Higgs Bots
+3737 Hank's Tanks
+4029 Two Bits and a Byte
+4096 T minus 10
+4176 The Architechs
+4408 Robots in Plaid
+4410 ARC Lightning
+5060 Milton Static
 5273 ARC Thunder
+5614 Team Immortalis
+5818 Bottering Rams
+5897 HackHers
+6032 Rosie's Riveters
+6055 Gear Ticks
+6308 Hutzbots
+8227 Enginuity
+8254 Spartans
+8379 Parity Bits
+8462 Friends, Robots, Countrymen
 8470 Team Technado
 8644 The Brainstormers
-9006 Cougars Austin
+8681 A Few Loose Screws
+9006 Cougars
 9148 Team Venator
-6055 Gear Ticks
-3085 Higgs Botsol
-4410 ARC Lightning
-6308 Hutzbots
-4176 The Architechs
-5614 Team Immortalis
+9181 MasterMinds
+9331 Mecha-Eagles
+9480 get WRCd()
+9620 R.O.U.S (Robots of Unusual Size)

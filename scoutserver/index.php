@@ -35,6 +35,7 @@ if(array_key_exists('x',$_POST) && is_string($_POST['x']) && $_POST['x'] !== '')
 	echo "<div><b>Submitted.</b></div>";
 }
 ?>
+<meta http-equiv="refresh" content="5">
 <form method="POST">
 	<input id="x" name="x" aria-required="true" required>
 	<input type="hidden" name="xsrf" value="<?=xsrf_gen()?>">

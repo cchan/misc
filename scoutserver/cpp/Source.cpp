@@ -7,19 +7,23 @@
 
 using namespace std;
 
-const int number_of_teams = 19;
-const int number_of_matches = 29;
+const int number_of_teams = 32;
+const int number_of_matches = 40;
 
 int main(){
-	const int watch_lookahead = 5;
-	const int match_lookahead = 2;
+	const int watch_lookahead = 8; //How many matches to look ahead for team-watching
+	const int match_lookahead = 4; //How many matches to look ahead for filling
 	const vector<string> columnlabels = { "Red 1", "Red 2", "Blue 1", "Blue 2" };
-	const vector<int> teams_to_watch = {4029, 8379};
+	const vector<int> teams_to_watch = { 4029, 8379 };
 	vector<vector<int> > matches(number_of_matches);
 	map<int, string> teamnames;
+	map<int, int> number_of_matches_each_team_is_in;
 
-	ifstream teamnamefile("TeamNames.txt");
-	ifstream teamfile("Matches.txt");
+	ifstream teamnamefile("C:/Users/Clive/Desktop/github/misc/scoutserver/cpp/TeamNamesStates.txt");
+	ifstream teamfile("C:/Users/Clive/Desktop/github/misc/scoutserver/cpp/MatchesStates.txt");
+
+	if (!teamnamefile){ cout << "Error opening team names" << endl; cin.get();  return 1; }
+	if (!teamfile){ cout << "Error opening matches" << endl; cin.get();  return 1; }
 
 	for (int i = 0; i < number_of_teams; i++){
 		int teamnum;
@@ -36,14 +40,30 @@ int main(){
 		matches[i] = vector<int>(4);
 		for (int j = 0; j < 4; j++){
 			teamfile >> matches[i][j];
-			if (!teamnames.count(matches[i][j])) {
+			if (!teamnames.count(matches[i][j])) { //Output ALL instances of nonexistent team
 				cout << "ERROR: match " << i << ", team " << j << ": " << matches[i][j] << " does not exist" << endl;
 				success = false;
 			}
+			else{
+				number_of_matches_each_team_is_in[matches[i][j]]++;
+			}
 		}
 	}
-	if (success)
-		cout << "Successfully verified all matches." << endl;
+
+	/*if (teamnamefile.get()){
+		cout << "Still extra teams in teamname file" << endl;
+		success = false;
+	}
+	if (teamfile){
+		cout << "Still extra teams in matches file" << endl;
+		success = false;
+	}*/
+	if (success){
+		cout << "\nSuccessfully verified all matches." << endl;
+		for (pair<int, int> nummatches : number_of_matches_each_team_is_in){
+			cout << "Team " << nummatches.first << " is in " << nummatches.second << " rounds" << endl;
+		}
+	}
 	else{
 		cout << "Errors found in matches." << endl;
 		cin.get();

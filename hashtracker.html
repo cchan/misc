@@ -1,10 +1,48 @@
 HashTracker
 <script>
 //http://www.w3schools.com/jsref/
-//Enumerates each of the below, and hashes them together.
+//Enumerates each of the below, and hashes them together. (except, minor changes won't preserve... :( )
 window;
 navigator;
 screen;
 history;
 location;
+
+//Based on https://remysharp.com/2008/07/08/how-to-detect-if-a-font-is-installed-only-using-javascript
+var font = (function () {
+	var test_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()[]\\;\',./{}|:"<>?~`-=_+';
+	var test_font = 'Comic Sans MS';
+	var notInstalledWidth = 0;
+	var testbed = null;
+	var guid = 0;
+		var setuped = false;
+
+	return {
+		setup : function () {
+			if ($('#fontInstalledTest').length) return;
+			
+			$('head').append('<' + 'style> #fontInstalledTest, #fontTestBed { position: absolute; left: -9999px; top: 0; visibility: hidden; } #fontInstalledTest { font-size: 50px!important; font-family: ' + test_font + ';}</' + 'style>');
+			
+			$('body').append('<div id="fontTestBed"></div>').append('<span id="fontInstalledTest" class="fonttest">' + test_string + '</span>');
+			testbed = $('#fontTestBed');
+			notInstalledWidth = $('#fontInstalledTest').width();
+			
+			setuped = true;
+		},
+
+		isInstalled : function(font) {
+			if(!setuped) setup();
+			
+			guid++;
+			
+			var style = '<' + 'style id="fonttestStyle"> #fonttest' + guid + ' { font-size: 50px!important; font-family: "' + font + '", "' + test_font + '"; } <' + '/style>';
+			
+			$('head').find('#fonttestStyle').remove().end().append(style);
+			testbed.empty().append('<span id="fonttest' + guid + '" class="fonttest">' + test_string + '</span>');
+			
+			return (testbed.find('span').width() != notInstalledWidth);
+		}
+	};
+})();
+
 </script>
