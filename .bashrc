@@ -1,15 +1,12 @@
 # .bashrc
-# LastUpdated 12/30/14
-# Copyright(c) Clive Chan, 2014
+# LastUpdated 6/21/2015 (the Git history is more reliable)
+# Copyright Clive Chan, 2014-present
 # License: CC BY-SA 4.0(https://creativecommons.org/licenses/by-sa/4.0/)
 
-# Description: Sets up a convenient Git Bash environment. Copy into ~ (on Windows, C:/Users/You/), and run msysgit.
-
+# Written for Windows. I'm not sure if it works on any other platform.
+# Description: Sets up a convenient Git Bash environment. Copy into ~ (C:/Users/You/), and run msysgit.
 
 clear
-echo Git Bash 
-git version
-
 
 ####### CUSTOMIZABLES #######
 
@@ -35,6 +32,33 @@ alias npp="\"C:\Program Files (x86)\Notepad++\notepad++.exe\""
 
 ####### CODE #######
 
+# COLORS!
+# https://wiki.archlinux.org/index.php/Color_Bash_Prompt
+# Regular Colors
+export Black='\e[0;30m'        # Black
+export Red='\e[0;31m'          # Red
+export Green='\e[0;32m'        # Green
+export Yellow='\e[0;33m'       # Yellow
+export Blue='\e[0;34m'         # Blue
+export Purple='\e[0;35m'       # Purple
+export Cyan='\e[0;36m'         # Cyan
+export White='\e[0;37m'        # White
+
+# Bold
+export BBlack='\e[1;30m'       # Black
+export BRed='\e[1;31m'         # Red
+export BGreen='\e[1;32m'       # Green
+export BYellow='\e[1;33m'      # Yellow
+export BBlue='\e[1;34m'        # Blue
+export BPurple='\e[1;35m'      # Purple
+export BCyan='\e[1;36m'        # Cyan
+export BWhite='\e[1;37m'       # White
+
+export ColorReset='\e[00m'     # Reset to default
+
+# Title + Version
+echo -e $BBlack"Git Bash"
+git version
 echo.
 
 # Gets to the right place
@@ -90,36 +114,39 @@ clone-bb () { git clone "git@bitbucket.org:$1"; }
 
 # The amazing git-status-all script, which reports on the status of every repo in the current folder.
 gsa () {
-	find -type d -name .git -prune -exec bash -c '
-	cd "{}/..";
+	export -f gsa_repodetails
+	find -type d -name .git -prune -exec bash -c 'gsa_repodetails "$0"' {} \;
+}
+gsa_repodetails () {
+	cd "$1/..";
 	echo "
---------{}--------";
+--------$1--------";
 	git remote update >/dev/null &>/dev/null
 	git -c color.status=always rev-parse --abbrev-ref HEAD
 	git -c color.status=always status -s
-
+	
 	for branch in $(git for-each-ref --sort="-authordate:iso8601" --format="%(refname)" refs/heads/); do
 		SHORT=$(basename "$branch")
 		
-		echo -e -n "\E[1;33m$SHORT:\E[0m "
+		echo -e -n $BYellow"$SHORT: "$ColorReset
 		if [[ -n $(git config --get branch.$SHORT.remote) ]]; then
 			LOCAL=$(git rev-parse "$SHORT")
 			REMOTE=$(git rev-parse "$SHORT"@{upstream})
 			BASE=$(git merge-base "$SHORT" "$SHORT"@{upstream})
 			
 			if [ $LOCAL = $REMOTE ]; then
-				echo -e "\E[32mUp-to-date.\E[0m"
+				echo -e $BGreen"Up-to-date."$ColorReset
 				git log -1 --pretty=format:"LATEST: %ar	%<(50,trunc)%s" $LOCAL --
 			elif [ $LOCAL = $BASE ]; then
-				echo -e "\E[31mNeed to pull!\E[0m"
+				echo -e $BRed"Need to pull!"$ColorReset
 				git log -1 --pretty=format:"LOCAL: %ar	%<(50,trunc)%s" $LOCAL --
 				git log -1 --pretty=format:"REMOTE: %ar	%<(50,trunc)%s" $REMOTE --
 			elif [ $REMOTE = $BASE ]; then
-				echo -e "\E[31mNeed to push!\E[0m"
+				echo -e $BRed"Need to push!"$ColorReset
 				git log -1 --pretty=format:"LOCAL: %ar	%<(50,trunc)%s" $LOCAL --
 				git log -1 --pretty=format:"REMOTE: %ar	%<(50,trunc)%s" $REMOTE --
 			else
-				echo -e "\E[31mDiverged!!\E[0m"
+				echo -e $BRed"Diverged!!"$ColorReset
 				git log -1 --pretty=format:"LOCAL: %ar	%<(50,trunc)%s" $LOCAL --
 				git log -1 --pretty=format:"REMOTE: %ar	%<(50,trunc)%s" $REMOTE --
 				git log -1 --pretty=format:"MERGE-BASE: %ar	%<(50,trunc)%s" $BASE --
@@ -129,7 +156,7 @@ gsa () {
 			git log -1 --pretty=format:"LATEST: %ar	%<(50,trunc)%s" $SHORT --
 		fi
 	done
-	' \;
+
 }
 
 
@@ -138,3 +165,15 @@ echo.
 echo Welcome! This is the super-awesome .bashrc file installed in your \~ directory.
 echo Sample commands: gs gc gu gsa npp. Try \"notepad ~/.bashrc\" to look at all your aliases and functions.
 echo.
+
+
+# https://wiki.archlinux.org/index.php/Color_Bash_Prompt
+set_bash_prompt_colors () {
+    PS1="\[$Yellow\][\$?] " # Exit status for the last command
+    PS1+="\[$Green\]\\u@\\h " # User@Host
+    PS1+="\[$Purple\]\w\[\e[m\] " # Path
+	PS1+="\[$Cyan\]\$(__git_ps1 '[%s] ')" # Git branch if applicable
+	PS1+="\[$Cyan\]\$\[\e[m\] " # Prompt
+	PS1+="\[$BWhite\]" # User input color
+}
+export PROMPT_COMMAND='set_bash_prompt_colors;history -a;history -c;history -r' # https://superuser.com/questions/555310/bash-save-history-without-exit
