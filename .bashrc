@@ -11,7 +11,7 @@ clear
 ####### CUSTOMIZABLES #######
 
 # Paths
-gitpath=~/Desktop/github
+gitpath=~/github
 gitbashrc=$gitpath/misc/.bashrc
 sshtmp=/tmp/sshagentthing.sh #yes, this is correct. It's a special Unix directory.
 
@@ -103,9 +103,11 @@ else
 fi
 
 # Git shortforms.
+alias ga="git add --all :/"
 alias gs="git status" # Laziness.
-alias gc="git add --all :/ && git commit" #Stages everything and commits it. You can add -m "asdf" if you want, and it'll apply to "git commit".
-gu () { gc "$@"; git push;} # commits things and pushes them. You can use gu -m "asdf", since all arguments to gu are passed to gc.
+alias gc="git add --all :/ && git commit" # Stages everything and commits it. You can add -m "asdf" if you want, and it'll apply to "git commit".
+gu () { gc "$@"; git push; } # commits things and pushes them. You can use gu -m "asdf", since all arguments to gu are passed to gc.
+alias gam="gc --amend --no-edit && git push --force" # Shortform for when you mess up and don't want an extra commit in the history
 
 # Shortform SSH cloning from GitHub and BitBucket
 # Use like this: clone-gh mathnerd3141/misc
