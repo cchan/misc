@@ -6,10 +6,10 @@
 <body style="font-family:Arial">
 <style>
 .main{
-width:85%;border:solid 1px #000000;padding:20px;margin:20px auto;
+width:85%;border:solid 2px #000000;padding:20px;margin:20px auto;
 }
 #subjdisplay{
-border:solid 1px black;padding:10px;
+border:solid 2px black;padding:10px;
 }
 #nsform{
 width:100%;
@@ -40,26 +40,27 @@ cursor:pointer;
 </style>
 <div class='main'>
 	<h2>DOE Question Template Generator</h2>
-	<small>Based on the subjects-per-person given, generates a DOE questions template with question assignments.</small>
+	<small>Based on the subjects-per-person given, generates a DOE questions template with question assignments, trying to minimize adjacent questions of the same subject.</small>
 	<br><br>
-	<div id="subjdisplay">Example subject spec: <b>9n6n3e4p</b> for 15 energy, 3 earthsci, 4 physics<br><br>
+	<div id="subjdisplay">Example subject spec: <b>9n3e4p</b> for 9 energy, 3 earthsci, 4 physics<br><br>
 	<b>Subject Key:</b><br></div>
 	<br>
-	<div id="subjnums" style='font-size:0.7em;'>&nbsp;</div>
 	<table id='nsform'>
 		<tr><td width="42%"><td width="5%"><td width="5%"><td width="42%"><td>
-		<tr id='nstitle'><th colspan=2>Name<th colspan=2>Subject<th>
+		<tr id='nstitle'><th colspan=2>Name<th colspan=2>Subject Spec<th>
 		<tr><td><td colspan=2><button class='addbtn' onclick="nsadd('','');">+</button><td><td>
 	</table>
 	<div style="text-align:center;width:100%;"></div>
 	<br>
-	<button onclick="genTemplate();generateLink();saveQCookie();selTemplate();">Generate Template</button>
-	<div style="max-width:100%;">Permalink: <a id="doclink" href="">(n/a)</a></div><br><br>
-	<div id="html" style="border:solid 1px #000000;" onclick="selTemplate();"><center style="font-style:italic;">template to be here</center></div>
+	<div style="max-width:100%;">Permalink: <a id="doclink" href="">(n/a)</a></div><br>
+	<div id="subjnums" style='font-style:italic;'>&nbsp;</div><br>
+	<button onclick="genTemplate();generateLink();saveQCookie();selTemplate();">Generate and Select Template</button> <small><i>(or click document to select)</i></small>
+	<br><br>
+	<div id="html" style="border:solid 2px #000000;cursor:pointer;font-family:Times New Roman;" onclick="selTemplate();"><center style="font-style:italic;">template to be here</center></div>
 </div>
 <div style="width:60%;color:white;background-color:black;border-radius:100px;margin:20px auto;text-align:center;font-weight:bold;">&copy;2014 LHS Scibowl</div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/jquery.min.js">\x3C/script>')</script>
 <script src="js/jquery.jsoncookie.js"></script>
 <script>
@@ -85,9 +86,10 @@ function saveQCookie(){
 	$(".name").each(function(){cookiearr.push([this.value,$(".subj").get($(".name").index(this)).value]);});
 	$.cookie("qcook",cookiearr);
 }
-function genTemplate(){
-	var qarr=[];
-	var sarr=[];
+function genTemplate(repetition){
+	
+	var qarr=[];//Contains [subject, name] pairs
+	var sarr=[];//Subjname : number of questions with that subj
 	$(".name").each(function(){
 		var sv=$(".subj").get($(".name").index(this)).value;
 		for(var i=0;i<sv.length;i+=2){
@@ -101,7 +103,29 @@ function genTemplate(){
 			}
 		}
 	});
-	qarr=mooShuffle(qarr);
+	
+	//Shuffle with no adjacent subjects (may be adjacent at end)
+	prevSubj = "";
+	for(var i=qarr.length-1;i>0;i--){
+		var randIndex;
+		var retries = 0;
+		do{
+			randIndex = Math.floor(Math.random() * i);
+			retries ++;
+		}while(qarr[randIndex][0] == prevSubj && retries < 10);
+		
+		prevSubj = qarr[randIndex][0];
+		
+		var tmp = qarr[randIndex];
+		qarr[randIndex] = qarr[i];
+		qarr[i] = tmp;
+		console.log(tmp[0]+" "+tmp[1]);
+	}
+	if(!repetition)repetition = 1;
+	if(repetition < 10 && (qarr[0][0]==qarr[1][0] || qarr[1][0]==qarr[2][0])){
+		genTemplate(repetition+1);
+		return;
+	}//Start all over again if duplicate (up to 10 times)
 	
 	$('#subjnums').text('This has ');
 	var stotal=0;
@@ -113,19 +137,14 @@ function genTemplate(){
 	
 	var fullhtml="<p style='text-align:center;font-weight:bold;'>[[team]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DOE Questions&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[date]]</p>";
 	var x=["TOSS-UP","BONUS"];
-	for(var i=0;i<qarr.length;i++)for(var j=0;j<x.length;j++)
-		fullhtml+="<p style='text-align:center;font-weight:bold;'>"+x[j]+"</p>"
-			+"<div style='font-weight:normal;'>"+(i+1)+") "+htmlentities(qarr[i][0])+" <i>Question Type</i> "+htmlentities(qarr[i][1])+"</div>"
-			+"<div style='font-weight:normal;'>ANSWER:&nbsp;</div>";
-	$("#html").html(fullhtml+"<br>");
-}
-function mooShuffle(arr){//Fisher-Yates Shuffle, but which I discovered myself independently. So I get to name it ^^
-	var ind,tmp;
-	for(var i=arr.length-1;i>0;i--){
-		ind=Math.floor(Math.random()*i);//Get random one
-		tmp=arr[i];arr[i]=arr[ind];arr[ind]=tmp;//Swap with last one in sorted area
+	for(var i=0;i<qarr.length;i++){
+		for(var j=0;j<x.length;j++)
+			fullhtml+="<p style='text-align:center;font-weight:bold;'>"+x[j]+"</p>"
+				+"<div style='font-weight:normal;'>"+(i+1)+") "+htmlentities(qarr[i][0])+" <i>Question Type</i> "+htmlentities(qarr[i][1])+"</div>"
+				+"<div style='font-weight:normal;'>ANSWER:&nbsp;</div>";
+		fullhtml+="<br><br>";
 	}
-	return arr;
+	$("#html").html(fullhtml+"<br>");
 }
 function htmlentities(str) {//http://css-tricks.com/snippets/javascript/htmlentities-for-javascript/
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
