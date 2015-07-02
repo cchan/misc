@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--
+for my own website: this layout is uninspired. Come up with something unique, like the circle.
+Also, not like lexwebdesigners; it's too lengthy and takes a while to get the info.
+Needs to be a very driven, straightforward, pragmatic, informative design. Which could also look awesome.
+Lots of jq animations of course.
+Design it on paper first.
+
+It's gonna be CSSCircle with the background gradients actually implemented. See paper design (in resume notes) for details.
+clivechan.com is available. Get it.
+-->
+
+<!--... what goes into a personal website? browse some to figure out.-->
+<!--For the sake of privacy, should it be so open? Resume just like that? Probably not.-->
+<!--title of sector > mouseover reveals description > click reveals half-screen thing -->
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+	<meta name="description" content="Homepage of Clive Chan.">
+	<meta name="keywords" content="Clive, Chan">
+	<meta name="author" content="Clive Chan">
+	<!--link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="img/favicon.ico" type="image/x-icon"-->
+	<title>Clive Chan</title>
+	<link href='normalize.css' rel='stylesheet' type='text/css'/>
+	
+	<link href='style.css' rel='stylesheet' type='text/css'/>
+	
+	<!--google analytics-->
+</head>
+<body>
+	<section id="center">
+		<h1>Clive Chan</h1>
+		<caption>
+			672 Waltham St. Lexington, MA 02421 &bull;
+			(781)-266-6088 &bull;
+			<a href="mailto:cchan3141@gmail.com">cchan3141@gmail.com</a>
+		</caption>
+		<article>
+			Hi! I'm Clive, a high school student at Lexington High School, MA. This is my homepage, crafted from scratch in HTML5, CSS3, and jQuery.
+			If you're looking for my resume, <a href="resume.pdf">here's a copy</a>.
+		</article>
+	</section>
+	<section class="sector">
+		<h2>Computer Programming</h2> <!--Icon: computer screen w/lightbulb-shine around it-->
+		<article>
+			Although I'm fluent in many programming languages, I'm mostly a web programmer, usually using the stack HTML/CSS/JS/PHP/MySQL.
+			I also have USACO experience with C++ and Java.
+		</article>
+	</section>
+	<section class="sector">
+		<h2>Academics</h2>
+		<article>
+			education
+			math everything
+			doe
+		</article>
+	</section>
+	<section class="sector">
+		<h2>Job/Internship Experience</h2>
+		<article></article>
+	</section>
+	<section class="sector">
+		<h2></h2>
+		<article></article>
+	</section>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="jquery.min.js"><\/script>')</script>
+	<script>
+	//If no script, the CSS should expand the whole thing on mouseover.
+	//If behind a certain version of CSS, just bail out and display plain.
+	</script>
+</body>
+</html>
