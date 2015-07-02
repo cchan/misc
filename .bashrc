@@ -79,6 +79,8 @@ else
 fi
 
 # Makes me sign in with SSH key if necessary; tries to preserve sessions if possible.
+# NOTE THAT this agent feature must be disabled to have security. Any application can ask the ssh-agent for stuff.
+	# Actually, this may not be true. :/
 # For a guide on how to use SSH with GitHub, try https://help.github.com/articles/generating-ssh-keys/
 # If something messes up, just remove the starter file and restart the shell with ssh-reset.
 # "ssh-agent" returns a bash script that sets global variables, so I store it into a tmp file auto-erased at each reboot.
