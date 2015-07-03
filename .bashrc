@@ -1,6 +1,6 @@
 # .bashrc
 # LastUpdated 6/21/2015 (the Git history is more reliable)
-# Copyright Clive Chan, 2014-present
+# Copyright Clive Chan, 2014-present (http://clive.io)
 # License: CC BY-SA 4.0(https://creativecommons.org/licenses/by-sa/4.0/)
 
 # Written for Windows. I'm not sure if it works on any other platform.
@@ -112,7 +112,7 @@ gu () { gc "$@"; git push; } # commits things and pushes them. You can use gu -m
 alias gam="gc --amend --no-edit && git push --force" # Shortform for when you mess up and don't want an extra commit in the history
 
 # Shortform SSH cloning from GitHub and BitBucket
-# Use like this: clone-gh mathnerd3141/misc
+# Use like this: clone-gh cchan/misc
 clone-gh () { git clone "git@github.com:$1"; }
 clone-bb () { git clone "git@bitbucket.org:$1"; }
 

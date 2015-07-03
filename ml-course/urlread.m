@@ -1,5 +1,5 @@
 %% urlread for Coursera
-% Written by Clive Chan 2015 https://mathnerd3141.github.io (not affiliated with Coursera)
+% Written by Clive Chan 2015 http://clive.io (not affiliated with Coursera)
 
 % WHAT
 	% Replacement for Octave's urlread with exactly enough functionality to run the Coursera Machine Learning assignment submission system.
