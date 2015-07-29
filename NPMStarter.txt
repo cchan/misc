@@ -1,0 +1,60 @@
+An attempt to make creation of a standard NodeJS, SocketIO Heroku project a little more comprehensible.
+
+
+Copyright Notice:
+	/*
+	Copyright (c)[year] Clive Chan
+	http://clive.io
+	https://github.com/cchan
+	*/
+
+[git init]
+
+[heroku create PROJECT_NAME]
+
+[npm init]
+[Then add to package.json:]
+  "scripts": {
+	"prestart": "sass public/main.scss:public/style.css",
+    "start": "foreman start"
+  },
+  "dependencies": {
+    "socket.io" : "latest",
+    "express": "latest"
+  }
+
+Procfile
+	web: node index.js
+
+index.js
+	var express = require('express');
+	var app = express();
+	var http = require('http').Server(app);
+	var io = require('socket.io')(http);
+
+	/*****Get the server up and listening*****/
+	http.listen(process.env.PORT || 3000, function(){ //Heroku dynamically assigns port: http://stackoverflow.com/a/15693371
+	  console.log('listening on *:' + (process.env.PORT || 3000));
+	});
+
+	/*****Figure out what to serve*****/
+	app.use(express.static('public')); //serves stuff in /public as if it's in the main directory
+	app.get('/', function(req, res){
+		//can log a pageload here
+		res.sendFile('index.html', { root: __dirname });
+	});
+
+	//io.on('connection', function(){...});
+
+README.md
+[empty]
+
+.gitignore
+	.sass-cache
+	node_modules
+
+public/main.scss
+
+public/index.html
+
+
