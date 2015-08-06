@@ -114,7 +114,9 @@ alias gam="gc --amend --no-edit && git push --force" # Shortform for when you me
 # Shortform SSH cloning from GitHub and BitBucket
 # Use like this: clone-gh cchan/misc
 clone-gh () { git clone "git@github.com:$1"; }
+gh-clone () { git clone "git@github.com:$1"; }
 clone-bb () { git clone "git@bitbucket.org:$1"; }
+bb-clone () { git clone "git@bitbucket.org:$1"; }
 
 # The amazing git-status-all script, which reports on the status of every repo in the current folder.
 gsa () {
