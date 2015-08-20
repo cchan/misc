@@ -1,0 +1,4 @@
+Wikitate
+========
+
+Wikipedia crowd-annotator, Chrome extension. Everyone sees each other's annotations and up/down-votes them.
