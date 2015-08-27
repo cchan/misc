@@ -1,0 +1,5 @@
+cd ~\Desktop\ml-res\coursera
+
+function npp(filename = "")
+	system(["\"C:/Program Files (x86)/Notepad++/notepad++.exe\" " filename]);
+end
