@@ -110,13 +110,14 @@ alias gs="git status" # Laziness.
 alias gc="git add --all :/ && git commit" # Stages everything and commits it. You can add -m "asdf" if you want, and it'll apply to "git commit".
 gu () { gc "$@"; git push; } # commits things and pushes them. You can use gu -m "asdf", since all arguments to gu are passed to gc.
 alias gam="gc --amend --no-edit && git push --force" # Shortform for when you mess up and don't want an extra commit in the history
+ghr () { br=`git branch | grep "*" | cut -c 3-`; git remote add $1 "git@github.com:$2"; git fetch $1; git branch -u $1/$br; }
 
 # Shortform SSH cloning from GitHub and BitBucket
 # Use like this: clone-gh cchan/misc
-clone-gh () { git clone "git@github.com:$1"; }
-gh-clone () { git clone "git@github.com:$1"; }
-clone-bb () { git clone "git@bitbucket.org:$1"; }
-bb-clone () { git clone "git@bitbucket.org:$1"; }
+clone-gh () { git clone "git@github.com:$1"; cd `basename $1`; }
+gh-clone () { clone-gh $1; }
+clone-bb () { git clone "git@bitbucket.org:$1"; cd `basename $1`; }
+bb-clone () { clone-bb $1; }
 
 # The amazing git-status-all script, which reports on the status of every repo in the current folder.
 gsa () {
