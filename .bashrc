@@ -14,6 +14,8 @@ clear
 gitpath=~/github
 gitbashrc=$gitpath/misc/.bashrc
 sshtmp=/tmp/sshagentthing.sh #yes, this is correct. It's a special Unix directory.
+PATH=$PATH:/c/MinGW/bin
+# perhaps I Should save $PATH here
 
 # Aliases for various repos
 alias tbb="cd ~/Desktop/github/2015-4029 && git status"
