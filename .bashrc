@@ -61,7 +61,7 @@ export ColorReset='\e[00m'     # Reset to default
 # Title + Version
 echo -e $BBlack"Git Bash"
 git version
-echo.
+echo
 
 # Gets to the right place
 cd $gitpath
@@ -74,7 +74,7 @@ elif [ $? -eq 1 ]; then
 	echo "Self-updating from $gitbashrc..."
 	cp -v $gitbashrc ~/.bashrc
 	echo "Done. Restarting Git Bash...";
-	echo.
+	echo
 	exec bash -l
 else
 	echo "Error looking for new version. Your \$gitbashrc path ($gitbashrc) may not be correct."
@@ -91,7 +91,7 @@ if [ -f ~/.ssh/id_rsa.pub -a -f ~/.ssh/id_rsa ]; then # Only if we actually have
 	ssh-end () { rm $sshtmp; kill $SSH_AGENT_PID; }
 	ssh-reset () { echo "Resetting SSH agent"; ssh-end; ssh-start; }
 	if [ ! -f $sshtmp ]; then # Only do it if daemon doesn't already exist
-		echo.
+		echo
 		echo "New SSH agent"
 		ssh-start
 	else # Otherwise, everything is preserved until the ssh-agent process is stopped.
@@ -170,10 +170,10 @@ gsa_repodetails () {
 
 
 # Welcome!
-echo.
+echo
 echo Welcome! This is the super-awesome .bashrc file installed in your \~ directory.
 echo Sample commands: gs gc gu gsa npp. Try \"notepad ~/.bashrc\" to look at all your aliases and functions.
-echo.
+echo
 
 
 # https://wiki.archlinux.org/index.php/Color_Bash_Prompt
