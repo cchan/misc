@@ -12,7 +12,7 @@ clear
 
 # Paths
 gitpath=~/github
-gitbashrc=$gitpath/misc/.bashrc
+gitbashrc=$gitpath/misc/bashrc
 sshtmp=/tmp/sshagentthing.sh #yes, this is correct. It's a special Unix directory.
 PATH=$PATH:/c/MinGW/bin
 # perhaps I Should save $PATH here
@@ -67,12 +67,12 @@ echo
 cd $gitpath
 
 # Self-update.
-cmp --silent $gitbashrc ~/.bashrc
+cmp --silent $gitbashrc/.bashrc ~/.bashrc
 if [ $? -eq 0 ]; then
 	echo ".bashrc is up to date."
 elif [ $? -eq 1 ]; then
-	echo "Self-updating from $gitbashrc..."
-	cp -v $gitbashrc ~/.bashrc
+	echo "Self-updating from $gitbashrc/.bashrc..."
+	cp -v $gitbashrc/.bashrc ~/.bashrc
 	echo "Done. Restarting Git Bash...";
 	echo
 	exec bash -l
@@ -131,13 +131,13 @@ gsa_repodetails () {
 	echo "
 --------$1--------";
 	git remote update >/dev/null &>/dev/null
-	git -c color.status=always rev-parse --abbrev-ref HEAD
+	git -c color.status=always rev-parse --abbrev-ref HEAD --
 	git -c color.status=always status -s
 	
 	for branch in $(git for-each-ref --sort="-authordate:iso8601" --format="%(refname)" refs/heads/); do
 		SHORT=$(basename "$branch")
 		
-		echo -e -n $BYellow"$SHORT: "$ColorReset
+		echo -e -n $BCyan"$SHORT: "$ColorReset
 		if [[ -n $(git config --get branch.$SHORT.remote) ]]; then
 			LOCAL=$(git rev-parse "$SHORT")
 			REMOTE=$(git rev-parse "$SHORT"@{upstream})
@@ -161,7 +161,7 @@ gsa_repodetails () {
 				git log -1 --pretty=format:"MERGE-BASE: %ar	%<(50,trunc)%s" $BASE --
 			fi
 		else
-			echo "No upstream configured."
+			echo -e $BYellow"No upstream configured."$ColorReset
 			git log -1 --pretty=format:"LATEST: %ar	%<(50,trunc)%s" $SHORT --
 		fi
 	done
