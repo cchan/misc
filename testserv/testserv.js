@@ -1,4 +1,6 @@
-require('http').createServer((req,res)=>res.end(`
+require('http').createServer((req,res)=>{
+  res.setHeader('Content-Type', 'text/html');
+  res.end(`
 <style>
   body{
     background-color:#FCF0E4;
@@ -19,5 +21,5 @@ require('http').createServer((req,res)=>res.end(`
 </style>
 <h1>i'm a little server</h1>
 <img src='https://clive.io/testserv.gif'>
-<footer><a href="https://clive.io">clive</a>'s test server</footer>
-`)).listen(8848,()=>console.log('listen 8848'));
+<footer><a href="https://clive.io">clive</a>'s test server</footer>`);
+}).listen(8848,()=>console.log('listen 8848'));
