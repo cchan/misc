@@ -1,0 +1,16 @@
+# Installation: on the www user, do GO111MODULE=off go get -u github.com/jmalloc/echo-server/...
+[Unit]
+Description=echo.clive.io service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=www
+Environment="PORT=10000"
+ExecStart=/home/www/go/bin/echo-server
+
+[Install]
+WantedBy=multi-user.target
